@@ -27,5 +27,5 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          tags: ghcr.io/TeamVerdeIngSis/parse:latest
+          tags: ghcr.io/teamverdeingsis/parse:latest
           push: true
