@@ -2,8 +2,9 @@ package com.github.teamverdeingsis.parse
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
 
-@SpringBootApplication
+@SpringBootApplication (exclude = [HibernateJpaAutoConfiguration::class])
 class ParseApplication
 
 fun main(args: Array<String>) {
