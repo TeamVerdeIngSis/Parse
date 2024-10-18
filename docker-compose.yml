@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   parse:
-    container_name: "parse-service"
+    container_name: "parse"
     build:
       context: .
       dockerfile: Dockerfile
