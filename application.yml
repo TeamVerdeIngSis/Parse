@@ -1,2 +1,3 @@
 spring:
-# Remove datasource and JPA settings as the Parse repository no longer uses a database.
+  main:
+    allow-bean-definition-overriding: true
