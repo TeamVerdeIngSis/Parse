@@ -1,15 +1,37 @@
 package com.github.teamverdeingsis.parse.controller
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import com.github.teamverdeingsis.parse.models.requests.AnalyzeRequest
+import com.github.teamverdeingsis.parse.models.requests.ExecuteRequest
+import com.github.teamverdeingsis.parse.models.requests.FormatRequest
+import com.github.teamverdeingsis.parse.models.requests.ValidateRequest
+import com.github.teamverdeingsis.parse.models.results.ExecutionResult
+import com.github.teamverdeingsis.parse.models.results.FormattedSnippet
+import com.github.teamverdeingsis.parse.models.results.LintingResult
+import com.github.teamverdeingsis.parse.models.results.ValidationResult
+import com.github.teamverdeingsis.parse.services.ParserService
+import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/parse")
-class ParseController {
+@RequestMapping("/api/parser")
+class ParseController(private val parserService: ParserService) {
 
-    @GetMapping("/hello")
-    fun sayHello(): String {
-        return "Hello from Parse"
+    @PostMapping("/analyze")
+    fun analyzeSnippet(@RequestBody request: AnalyzeRequest): LintingResult {
+        return parserService.lintSnippet(request.snippetCode, request.languageVersion, request.lintingRules)
+    }
+
+    @PostMapping("/format")
+    fun formatSnippet(@RequestBody request: FormatRequest): FormattedSnippet {
+        return parserService.formatSnippet(request.snippetCode, request.languageVersion, request.formattingRules)
+    }
+
+    @PostMapping("/validate")
+    fun validateSnippet(@RequestBody request: ValidateRequest): ValidationResult {
+        return parserService.validateSnippet(request.snippetCode, request.languageVersion)
+    }
+
+    @PostMapping("/execute")
+    fun executeSnippet(@RequestBody request: ExecuteRequest): ExecutionResult {
+        return parserService.executeSnippet(request.snippetCode, request.languageVersion)
     }
 }
