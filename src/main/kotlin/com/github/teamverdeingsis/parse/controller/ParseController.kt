@@ -9,7 +9,11 @@ import com.github.teamverdeingsis.parse.models.results.FormattedSnippet
 import com.github.teamverdeingsis.parse.models.results.LintingResult
 import com.github.teamverdeingsis.parse.models.results.ValidationResult
 import com.github.teamverdeingsis.parse.services.ParserService
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
+
 
 @RestController
 @RequestMapping("/api/parser")

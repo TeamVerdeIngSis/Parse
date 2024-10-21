@@ -1,4 +1,4 @@
-package com.example.parser.models
+package com.github.teamverdeingsis.parse.models.requests
 
 data class ExecuteRequest(
     val snippetCode: String,
