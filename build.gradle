@@ -35,7 +35,7 @@ dependencies {
 	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
 	implementation 'org.jetbrains.kotlin:kotlin-reflect'
 	implementation("printScript:cli:1.1.20") //nuestro printscript
-	implementation 'com.github.ajalt.clikt:clikt:3.4.0' //clikt para el cli
+	implementation 'com.github.ajalt.clikt:clikt:4.4.0' //clikt para el cli
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
