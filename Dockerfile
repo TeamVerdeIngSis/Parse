@@ -1,5 +1,5 @@
 # Dockerfile for Kotlin Spring Boot Project using Multi-Stage Build
-FROM gradle:7.6-jdk21 AS builder
+FROM gradle:8.10-jdk21 AS builder
 COPY . /home/gradle/src
 WORKDIR /home/gradle/src
 RUN gradle build --no-daemon
