@@ -4,7 +4,8 @@
 FROM gradle:8.10-jdk21 AS builder
 
 # Copia el archivo gradle.properties primero para que las credenciales estén disponibles
-COPY ./gradle.properties /home/gradle/.gradle/gradle.properties
+COPY /gradle.properties /home/gradle/.gradle/gradle.properties
+
 
 
 # Copia el código fuente del proyecto
