@@ -4,9 +4,10 @@
 FROM gradle:8.10-jdk21 AS builder
 
 # Copia el archivo gradle.properties primero para que las credenciales estén disponibles
-COPY gradle.properties /home/gradle.properties
-
-
+ARG GITHUB_ACTOR
+ARG GITHUB_TOKEN
+ENV GITHUB_ACTOR=$GITHUB_USER
+ENV GITHUB_TOKEN=$GITHUB_TOKEN
 
 # Copia el código fuente del proyecto
 COPY . /home/gradle/src
