@@ -20,16 +20,20 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
-          username: ${{ secrets.MY_GITHUB_ACTOR }}
-          password: ${{ secrets.MY_GITHUB_TOKEN }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up environment for Gradle
+        run: |
+          mkdir -p ~/.gradle
+          echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties
+          echo "gpr.user=${{ secrets.MY_GITHUB_ACTOR }}" >> ~/.gradle/gradle.properties
+          echo "gpr.token=${{ secrets.MY_GITHUB_TOKEN }}" >> ~/.gradle/gradle.properties
 
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v2
         with:
           context: .
-          platforms: linux/amd64,linux/arm64  # Especifica las plataformas que quieres soportar
+          platforms: linux/amd64,linux/arm64
           tags: ghcr.io/teamverdeingsis/parse:latest
           push: true
-        env:
-          GITHUB_ACTOR: ${{ secrets.MY_GITHUB_ACTOR }}
-          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
