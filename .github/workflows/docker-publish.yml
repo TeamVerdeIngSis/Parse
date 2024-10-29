@@ -20,8 +20,8 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ secrets.MY_GITHUB_ACTOR }}  # Usando el secreto MY_GITHUB_ACTOR
+          password: ${{ secrets.MY_GITHUB_TOKEN }}  # Usando el secreto MY_GITHUB_TOKEN
 
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v2
@@ -30,3 +30,6 @@ jobs:
           platforms: linux/amd64,linux/arm64  # Especifica las plataformas que quieres soportar
           tags: ghcr.io/teamverdeingsis/parse:latest
           push: true
+          build-args:  # Pasa las variables de entorno como argumentos de construcción
+            GITHUB_ACTOR: ${{ secrets.MY_GITHUB_ACTOR }}  # Pasa el usuario como build-arg
+            GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}  # Pasa el token como build-arg

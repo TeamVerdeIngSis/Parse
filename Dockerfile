@@ -3,10 +3,12 @@
 # First stage: Build the project
 FROM gradle:8.10-jdk21 AS builder
 
-# Copia el archivo gradle.properties primero para que las credenciales estén disponibles
+# Define build arguments for GitHub credentials
 ARG GITHUB_ACTOR
 ARG GITHUB_TOKEN
-ENV GITHUB_ACTOR=$GITHUB_USER
+
+# Configura las credenciales en variables de entorno
+ENV GITHUB_ACTOR=$GITHUB_ACTOR
 ENV GITHUB_TOKEN=$GITHUB_TOKEN
 
 # Copia el código fuente del proyecto
