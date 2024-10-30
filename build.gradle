@@ -3,44 +3,45 @@ plugins {
 	id 'org.jetbrains.kotlin.plugin.spring' version '1.9.25'
 	id 'org.springframework.boot' version '2.6.0'
 	id 'io.spring.dependency-management' version '1.1.6'
+	id 'org.jetbrains.kotlinx.kover' version '0.8.2'
+	id 'maven-publish'
 }
 
 group = 'com.github.teamverdeingsis'
 version = '0.0.2-SNAPSHOT'
 
-java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
-	}
-}
-
-
 repositories {
-	mavenLocal()
 	mavenCentral()
-	gradlePluginPortal()
 	maven {
-		name = "GitHubPackages"
 		url = uri("https://maven.pkg.github.com/FedeKraft/printScript2")
-		credentials {
-			username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
-			password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
-		}
 	}
 }
-
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
-	implementation 'org.jetbrains.kotlin:kotlin-reflect'
-	implementation("printScript:cli:1.1.20") //nuestro printscript
-	implementation 'com.github.ajalt.clikt:clikt:4.4.0' //clikt para el cli
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	// Dependencias de Spring Boot
+	implementation 'org.springframework.boot:spring-boot-starter-actuator:2.6.0'
+	implementation 'org.springframework.boot:spring-boot-starter-web:2.6.0'
+
+	// Dependencias de Jackson para Kotlin
+	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.12.3'
+
+	// Dependencias de Kotlin
+	implementation 'org.jetbrains.kotlin:kotlin-reflect:1.9.25'
+	implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.25' // Específica para stdlib
+
+	// Implementación de PrintScript CLI
+	implementation 'printScript:cli:1.1.20' // Proyecto PrintScript
+
+	// CLI Tool (Clikt)
+	implementation 'com.github.ajalt.clikt:clikt:4.4.0'
+
+	// Dependencias de desarrollo
+	developmentOnly 'org.springframework.boot:spring-boot-devtools:2.6.0'
+
+	// Dependencias para pruebas
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.0'
+	testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5:1.9.25'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.8.0'
 }
 
 kotlin {
