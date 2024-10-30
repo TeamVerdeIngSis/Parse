@@ -25,8 +25,10 @@ jobs:
 
       - name: Set up environment for Gradle
         run: |
-          echo "gpr.user=${{ secrets.MY_GITHUB_ACTOR }}" >> ~/.gradle/gradle.properties
-          echo "gpr.token=${{ secrets.MY_GITHUB_TOKEN }}" >> ~/.gradle/gradle.properties
+          mkdir -p ~/.gradle
+          echo "gpr.user=${{ github.actor }}" >> ~/.gradle/gradle.properties
+          echo "gpr.token=${{ secrets.GITHUB_TOKEN }}" >> ~/.gradle/gradle.properties
+      
 
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v2
