@@ -1,4 +1,4 @@
-package com.example.parser
+package com.github.teamverdeingsis.parse
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

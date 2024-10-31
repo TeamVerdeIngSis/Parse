@@ -4,6 +4,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - USERNAME=${USERNAME}
+        - TOKEN=${TOKEN}
+    env_file:
+      - .env
     ports:
       - 8081:8080
     volumes:
