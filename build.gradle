@@ -1,14 +1,18 @@
 plugins {
 	id 'org.jetbrains.kotlin.jvm' version '1.9.25'
 	id 'org.jetbrains.kotlin.plugin.spring' version '1.9.25'
-	id 'org.springframework.boot' version '3.3.4'
+	id 'org.springframework.boot' version '3.3.5'
 	id 'io.spring.dependency-management' version '1.1.6'
-	id 'org.jetbrains.kotlinx.kover' version '0.8.2'
-	id 'maven-publish'
 }
 
 group = 'com.github.teamverdeingsis'
 version = '0.0.2-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
 
 repositories {
 	mavenCentral()
@@ -23,30 +27,19 @@ repositories {
 }
 
 dependencies {
+
 	// Dependencias de Spring Boot
-	implementation 'org.springframework.boot:spring-boot-starter-actuator:2.6.0'
-	implementation 'org.springframework.boot:spring-boot-starter-web:2.6.0'
-
-	// Dependencias de Jackson para Kotlin
-	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.12.3'
-
-	// Dependencias de Kotlin
-	implementation 'org.jetbrains.kotlin:kotlin-reflect:1.9.25'
-	implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.25' // Específica para stdlib
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
+	implementation 'org.jetbrains.kotlin:kotlin-reflect'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 	// Implementación de PrintScript CLI
 	implementation 'printScript:cli:1.1.20' // Proyecto PrintScript
-
-	// CLI Tool (Clikt)
-	implementation 'com.github.ajalt.clikt:clikt:4.4.0'
-
-	// Dependencias de desarrollo
-	developmentOnly 'org.springframework.boot:spring-boot-devtools:2.6.0'
-
-	// Dependencias para pruebas
-	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.0'
-	testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5:1.9.25'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.8.0'
 }
 
 kotlin {

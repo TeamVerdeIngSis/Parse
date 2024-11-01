@@ -4,10 +4,6 @@ import com.github.teamverdeingsis.parse.models.results.ExecutionResult
 import com.github.teamverdeingsis.parse.models.results.FormattedSnippet
 import com.github.teamverdeingsis.parse.models.results.LintingResult
 import com.github.teamverdeingsis.parse.models.results.ValidationResult
-import commands.AnalyzingCommand
-import commands.ValidationCommand
-import commands.FormattingCommand
-import commands.ExecutionCommand
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 
@@ -27,34 +23,34 @@ class PrintScriptLanguageHandler : LanguageHandler {
     }
 
     override fun lint(code: String, rules: List<String>): LintingResult {
-        val output = captureOutputOf {
-            val analyzer = AnalyzingCommand()
-            analyzer.run()
-        }
-        return LintingResult(success = output.isNotEmpty(), errors = listOf(output))
+//        val output = captureOutputOf {
+//            val analyzer = AnalyzingCommand()
+//            analyzer.run()
+//        }
+        return LintingResult(success = false, errors = listOf())
     }
 
     override fun format(code: String, rules: List<String>): FormattedSnippet {
-        val output = captureOutputOf {
-            val formatter = FormattingCommand()
-            formatter.run()
-        }
-        return FormattedSnippet(formattedCode = output)
+//        val output = captureOutputOf {
+//            val formatter = FormattingCommand()
+//            formatter.run()
+//        }
+        return FormattedSnippet(formattedCode = "")
     }
 
     override fun validate(code: String): ValidationResult {
-        val output = captureOutputOf {
-            val validator = ValidationCommand()
-            validator.run()
-        }
-        return ValidationResult(isValid = true, ast = output)
+//        val output = captureOutputOf {
+//            val validator = ValidationCommand()
+//            validator.run()
+//        }
+        return ValidationResult(isValid = true, ast = "")
     }
 
     override fun execute(code: String): ExecutionResult {
-        val output = captureOutputOf {
-            val executor = ExecutionCommand()
-            executor.run()
-        }
-        return ExecutionResult(output = output)
+//        val output = captureOutputOf {
+//            val executor = ExecutionCommand()
+//            executor.run()
+//        }
+        return ExecutionResult(output = "")
     }
 }
