@@ -29,9 +29,6 @@ jobs:
           echo "gpr.user=${{ github.actor }}" >> ~/.gradle/gradle.properties
           echo "gpr.token=${{ secrets.GITHUB_TOKEN }}" >> ~/.gradle/gradle.properties
 
-      - name: Clean Gradle Cache  # Paso de limpieza de Gradle
-        run: gradle clean --no-daemon
-
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v2
         with:
