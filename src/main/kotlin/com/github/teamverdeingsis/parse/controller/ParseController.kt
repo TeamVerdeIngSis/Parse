@@ -38,4 +38,9 @@ class ParseController(private val parserService: ParserService) {
     fun executeSnippet(@RequestBody request: ExecuteRequest): ExecutionResult {
         return parserService.executeSnippet(request.snippetCode, request.languageVersion)
     }
+
+    @PostMapping("/pong")
+    fun pong(): String {
+        return "pong"
+    }
 }

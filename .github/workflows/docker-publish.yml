@@ -36,3 +36,6 @@ jobs:
           platforms: linux/amd64
           tags: ghcr.io/teamverdeingsis/parse:latest
           push: true
+          secrets: |
+            gpr_user=${{ secrets.USERNAME }}
+            gpr_token=${{ secrets.TOKEN}}

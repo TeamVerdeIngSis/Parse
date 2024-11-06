@@ -20,8 +20,8 @@ repositories {
 	maven {
 		url = uri("https://maven.pkg.github.com/FedeKraft/printScript2")
 		credentials {
-			username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
-			password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+			username = project.findProperty("gpr_user") ?: System.getenv("USERNAME")
+			password = project.findProperty("gpr_key") ?: System.getenv("TOKEN")
 		}
 	}
 }
@@ -39,7 +39,11 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 	// Implementación de PrintScript CLI
-	implementation 'printScript:cli:1.1.20' // Proyecto PrintScript
+	implementation 'printScript:lexer:1.1.20'
+	implementation 'printScript:parser:1.1.20'
+	implementation 'printScript:interpreter:1.1.20'
+	implementation 'printScript:linter:1.1.20'
+	implementation 'printScript:formatter:1.1.20'
 }
 
 kotlin {

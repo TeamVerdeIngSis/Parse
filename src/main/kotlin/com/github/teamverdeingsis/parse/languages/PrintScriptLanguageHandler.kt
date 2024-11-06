@@ -8,49 +8,21 @@ import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 
 class PrintScriptLanguageHandler : LanguageHandler {
-
-    private fun captureOutputOf(command: () -> Unit): String {
-        val outputStream = ByteArrayOutputStream()
-        val printStream = PrintStream(outputStream)
-        val oldOut = System.out
-        try {
-            System.setOut(printStream)
-            command()
-        } finally {
-            System.setOut(oldOut)
-        }
-        return outputStream.toString()
-    }
-
     override fun lint(code: String, rules: List<String>): LintingResult {
-//        val output = captureOutputOf {
-//            val analyzer = AnalyzingCommand()
-//            analyzer.run()
-//        }
-        return LintingResult(success = false, errors = listOf())
+        TODO("Not yet implemented")
     }
 
     override fun format(code: String, rules: List<String>): FormattedSnippet {
-//        val output = captureOutputOf {
-//            val formatter = FormattingCommand()
-//            formatter.run()
-//        }
-        return FormattedSnippet(formattedCode = "")
+        TODO("Not yet implemented")
     }
 
     override fun validate(code: String): ValidationResult {
-//        val output = captureOutputOf {
-//            val validator = ValidationCommand()
-//            validator.run()
-//        }
-        return ValidationResult(isValid = true, ast = "")
+        TODO("Not yet implemented")
     }
 
     override fun execute(code: String): ExecutionResult {
-//        val output = captureOutputOf {
-//            val executor = ExecutionCommand()
-//            executor.run()
-//        }
-        return ExecutionResult(output = "")
+        TODO("Not yet implemented")
     }
+
+
 }
