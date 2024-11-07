@@ -2,7 +2,7 @@
 FROM gradle:8.10-jdk21 AS builder
 COPY . /home/gradle/src
 WORKDIR /home/gradle/src
-RUN gradle bootJar
+RUN gradle build --no-daemon
 
 # Second stage: Create a lightweight image for running the application
 FROM eclipse-temurin:21-jdk
