@@ -27,7 +27,7 @@ jobs:
         run: |
           echo "Running with the following environment variables:"
           echo "GitHub Actor: $GITHUB_USERNAME"
-          echo "GitHub Token: [TOKEN is set]" # No se imprimirá directamente por seguridad
+          echo "GitHub Token: " # No se imprimirá directamente por seguridad
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           GITHUB_USERNAME: ${{ github.actor }}

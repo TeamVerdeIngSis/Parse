@@ -5,19 +5,23 @@ services:
       context: .
       dockerfile: Dockerfile
       secrets:
-        - TOKEN = ${{ secrets.github_token }}
-        - USERNAME = ${{ github.actor }}
+        - github_token
+        - github_username
     env_file:
       - .env
     environment:
-        - GITHUB_TOKEN=${{ secrets.github_token }}
-        - GITHUB_USERNAME=${{ secrets.actor }}
-
+        - GITHUB_TOKEN=$${secrets.github_token}
+        - GITHUB_USERNAME=$${secrets.github_username}
     ports:
       - "8081:8080"
     volumes:
       - parse_data:/app/data
 
+secrets:
+  github_token:
+    environment: GITHUB_TOKEN
+  github_username:
+    environment: GITHUB_USERNAME
 volumes:
   parse_data:
     driver: local
