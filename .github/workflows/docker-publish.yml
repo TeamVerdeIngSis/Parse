@@ -37,5 +37,5 @@ jobs:
           tags: ghcr.io/teamverdeingsis/parse:latest
           push: true
         env:
-          USERNAME: ${{ secrets.USERNAME }}
+          USERNAME: ${{ github.actor }}
           TOKEN: ${{ secrets.TOKEN }}
