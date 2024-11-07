@@ -4,16 +4,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        USERNAME: ${USERNAME}
-        TOKEN: ${TOKEN}
     env_file:
       - .env
     ports:
       - "8081:8080"
     volumes:
       - parse_data:/app/data
-
 
 volumes:
   parse_data:
