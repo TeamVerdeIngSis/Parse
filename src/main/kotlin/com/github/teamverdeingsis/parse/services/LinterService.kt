@@ -13,7 +13,7 @@ import java.nio.file.Paths
 @Service
 class LinterService {
     fun lintSnippet(code: InputStream, version: String): List<LinterError> {
-        val reader = Reader(code)
+         val reader = Reader(code)
         val configFilePath =
             "C:\\Users\\vranc\\Projects\\Ingsis\\PrintScript2\\cli\\src\\main\\resources\\linter-config.json"
         val path = Paths.get(configFilePath)
