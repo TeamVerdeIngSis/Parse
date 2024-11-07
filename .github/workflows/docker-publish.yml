@@ -36,3 +36,6 @@ jobs:
           platforms: linux/amd64
           tags: ghcr.io/teamverdeingsis/parse:latest
           push: true
+        env:
+          USERNAME: ${{ secrets.USERNAME }}
+          TOKEN: ${{ secrets.TOKEN }}
