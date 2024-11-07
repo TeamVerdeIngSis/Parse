@@ -23,6 +23,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.TOKEN }}
 
+      - name: Print Variables for Debugging
+        run: |
+          echo "Running with the following environment variables:"
+          echo "GitHub Actor: $GITHUB_USERNAME"
+          echo "GitHub Token: [TOKEN is set]" # No se imprimirá directamente por seguridad
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_USERNAME: ${{ github.actor }}
 
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v2
@@ -35,5 +43,5 @@ jobs:
             "github_token=${{ secrets.TOKEN }}"
             "github_username=${{ github.actor }}"
         env:
-            GITHUB_TOKEN: ${{ secrets.TOKEN }}
-            GITHUB_USERNAME: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_USERNAME: ${{ github.actor }}
