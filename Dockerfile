@@ -5,7 +5,7 @@ COPY . /home/gradle/src
 WORKDIR /home/gradle/src
 RUN --mount=type=secret,id=github_token,env=GITHUB_TOKEN,required \
     --mount=type=secret,id=github_username,env=GITHUB_USERNAME,required \
-    gradle bootJar
+    gradle build
 
 # Second stage: Create a lightweight image for running the application
 FROM eclipse-temurin:21-jdk
