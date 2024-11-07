@@ -21,13 +21,13 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up environment for Gradle
         run: |
           mkdir -p ~/.gradle
-          echo "gpr.user=${{ secrets.USERNAME}}" >> ~/gradle.properties
-          echo "gpr.token=${{ secrets.TOKEN }}" >> ~/gradle.properties
+          echo "gpr.user=${{ github.actor }}" >> ~/gradle.properties
+          echo "gpr.token=${{ secrets.GITHUB_TOKEN }}" >> ~/gradle.properties
 
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v2
