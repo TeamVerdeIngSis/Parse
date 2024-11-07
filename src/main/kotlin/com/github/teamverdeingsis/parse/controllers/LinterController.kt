@@ -16,8 +16,7 @@ class LinterController(private val service: LinterService) {
     fun lint(@RequestBody request: LinterDTO): List<LinterError> {
         val code = request.code
         val version = request.version
-        val rules = request.rules
 
-        return service.lintSnippet(code, version, rules)
+        return service.lintSnippet(code, version)
     }
 }
