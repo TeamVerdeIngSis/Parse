@@ -33,6 +33,7 @@ jobs:
           push: true
           secrets: |
             "github_token=${{ secrets.TOKEN }}"
+            "github_username=${{ github.actor }}"
         env:
             GITHUB_TOKEN: ${{ secrets.TOKEN }}
             GITHUB_USERNAME: ${{ github.actor }}
