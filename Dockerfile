@@ -2,6 +2,8 @@
 FROM gradle:8.10-jdk21 AS builder
 ARG USERNAME
 ARG TOKEN
+ENV USERNAME=${USERNAME}
+ENV TOKEN=${TOKEN}
 COPY . /home/gradle/src
 WORKDIR /home/gradle/src
 RUN gradle bootJar
