@@ -4,8 +4,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      secrets:
+        - github_token
+        - github_username
     env_file:
       - .env
+    environment:
+        - GITHUB_TOKEN=${{ secrets.github_token }}
+        - GITHUB_USERNAME=${{ secrets.github_username }}
+
     ports:
       - "8081:8080"
     volumes:
