@@ -8,9 +8,9 @@ import java.io.InputStream
 
 @Service
 class ValidateService {
-    fun validateSnippet(code: InputStream, version: String): String {
-
-        val reader = Reader(code)
+    fun validateSnippet(code: String, version: String): String {
+        val codeToInputStream: InputStream = code.byteInputStream()
+        val reader = Reader(codeToInputStream)
         val lexer = when (version) {
             "1.1" -> LexerFactory().createLexer1_1(reader)
             else -> LexerFactory().createLexer1_0(reader)

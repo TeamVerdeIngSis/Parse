@@ -11,17 +11,16 @@ import java.io.InputStream
 
 @Service
 class FormatterService {
-    fun formatSnippet(code: InputStream, version: String, rules: String): String {
-        val reader = Reader(code)
-        val configFilePath =
-            "C:\\Users\\vranc\\Projects\\Ingsis\\PrintScript2\\cli\\src\\main\\resources\\formatter-config.json"
+    fun formatSnippet(code: String, version: String, rules: String): String {
+        val codeToInputStream: InputStream = code.byteInputStream()
+        val reader = Reader(codeToInputStream)
+        val configFilePath = "src\\main\\resources\\formatter-config.json"
         val config = FormatterConfigLoader.loadConfig(configFilePath)
         val rules = listOf(
             Indentation(config.indentation),
             NoSpaceAroundEqualsRule(config.spaceAroundEquals.enabled),
             SpaceBeforeColonRule(config.spaceBeforeColon.enabled),
             SpaceAfterColonRule(config.spaceAfterColon.enabled),
-            // Add other rules based on the provided config
             NewlineBeforePrintlnRule(config.newlineBeforePrintln),
         )
         val lexer = when (version) {
