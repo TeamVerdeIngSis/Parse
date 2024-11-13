@@ -16,8 +16,7 @@ class FormatterController(private val service: FormatterService) {
     fun format(@RequestBody request: FormatterDTO): String {
         val code = request.code
         val version = request.version
-        val rules = request.rules
 
-        return service.formatSnippet(code, version, rules.toString())
+        return service.formatSnippet(code, version)
     }
 }
