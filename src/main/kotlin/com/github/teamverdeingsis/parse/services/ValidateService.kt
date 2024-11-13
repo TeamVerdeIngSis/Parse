@@ -19,10 +19,11 @@ class ValidateService {
             "1.1" -> ParserFactory().createParser1_1(lexer)
             else -> ParserFactory().createParser1_0(lexer)
         }
+        val results = mutableListOf<String>()
         while (parser.hasNextAST()) {
             val statement = parser.nextStatement()
-            println(statement)
+            results.add(statement.toString())
         }
-        return "file validated"
+        return if (results.isEmpty()) "No errors found" else results.joinToString(separator = "\n")
     }
 }
