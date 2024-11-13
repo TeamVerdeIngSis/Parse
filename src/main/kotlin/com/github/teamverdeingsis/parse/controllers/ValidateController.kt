@@ -16,5 +16,4 @@ class ValidateController(private val service: ValidateService) {
     fun validate(@RequestBody request: ValidateDTO): String {
         return service.validateSnippet(request.code, request.version)
     }
-
 }
