@@ -11,7 +11,7 @@ import java.io.InputStream
 
 @Service
 class FormatterService {
-    fun formatSnippet(code: String, version: String, rules: String): String {
+    fun formatSnippet(code: String, version: String): String {
         val codeToInputStream: InputStream = code.byteInputStream()
         val reader = Reader(codeToInputStream)
         val configFilePath = "src\\main\\resources\\formatter-config.json"
