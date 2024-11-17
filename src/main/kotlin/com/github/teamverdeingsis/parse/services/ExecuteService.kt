@@ -10,6 +10,8 @@ import provider.ConsoleInputProvider
 import reader.Reader
 import java.io.InputStream
 
+
+
 @Service
 class ExecuteService {
     fun executeSnippet(code: String, version: String): String {
