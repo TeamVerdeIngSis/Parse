@@ -1,0 +1,19 @@
+{
+  "spaceBeforeColon": {
+    "enabled": true
+  },
+  "spaceAfterColon": {
+    "enabled": true
+  },
+  "spaceAroundEquals": {
+    "enabled": true
+  },
+  "newlineBeforePrintln": {
+    "enabled": true,
+    "newlineCount": 2
+  },
+  "indentation": {
+    "enabled": true,
+    "n": 4
+  }
+}
