@@ -1,58 +1,59 @@
 plugins {
-	id 'org.jetbrains.kotlin.jvm' version '1.9.25'
-	id 'org.jetbrains.kotlin.plugin.spring' version '1.9.25'
-	id 'org.springframework.boot' version '3.3.5'
-	id 'io.spring.dependency-management' version '1.1.6'
+ id 'org.jetbrains.kotlin.jvm' version '1.9.25'
+ id 'org.jetbrains.kotlin.plugin.spring' version '1.9.25'
+ id 'org.springframework.boot' version '3.3.5'
+ id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'com.github.teamverdeingsis'
 version = '0.0.2-SNAPSHOT'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
-	}
+ toolchain {
+  languageVersion = JavaLanguageVersion.of(21)
+ }
 }
 
 repositories {
-	mavenCentral()
-	gradlePluginPortal()
-	maven {
-		url = uri("https://maven.pkg.github.com/FedeKraft/printScript2")
-		credentials {
-			username = project.findProperty("gpr_user") ?: System.getenv("USERNAME")
-			password = project.findProperty("gpr_key") ?: System.getenv("TOKEN")
-		}
-	}
+ mavenCentral()
+ gradlePluginPortal()
+ maven {
+  url = uri("https://maven.pkg.github.com/FedeKraft/printScript2")
+  credentials {
+   username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
+   password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+  }
+ }
 }
 
 dependencies {
+ // Dependencias de Spring Boot
+ implementation 'org.springframework.boot:spring-boot-starter-actuator'
+ implementation 'org.springframework.boot:spring-boot-starter-web'
+ implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
+ implementation 'org.jetbrains.kotlin:kotlin-reflect'
+ developmentOnly 'org.springframework.boot:spring-boot-devtools'
+ testImplementation 'org.springframework.boot:spring-boot-starter-test'
+ testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
+ testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-	// Dependencias de Spring Boot
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
-	implementation 'org.jetbrains.kotlin:kotlin-reflect'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+ // Implementación de PrintScript CLI
+ implementation 'printScript:lexer:1.1.24'
+ implementation 'printScript:parser:1.1.24'
+ implementation 'printScript:interpreter:1.1.24'
+ implementation 'printScript:linter:1.1.24'
+ implementation 'printScript:formatter:1.1.24'
+ implementation 'printScript:ast:1.1.24'
+ implementation 'printScript:cli:1.1.24'
 
-	// Implementación de PrintScript CLI
-	implementation 'printScript:lexer:1.1.20'
-	implementation 'printScript:parser:1.1.20'
-	implementation 'printScript:interpreter:1.1.20'
-	implementation 'printScript:linter:1.1.20'
-	implementation 'printScript:formatter:1.1.20'
-	implementation 'printScript:ast:1.1.20'
 }
 
 kotlin {
-	compilerOptions {
-		freeCompilerArgs.addAll '-Xjsr305=strict'
-	}
+ compilerOptions {
+  freeCompilerArgs.addAll '-Xjsr305=strict'
+ }
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+ useJUnitPlatform()
 }

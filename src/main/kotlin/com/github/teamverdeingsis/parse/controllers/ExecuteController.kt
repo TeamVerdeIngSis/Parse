@@ -29,12 +29,4 @@ class ExecuteController(private val service: ExecuteService) {
             return "Hey!"
         }
 
-    @PostMapping("/execute2")
-    fun execute(
-        @RequestParam("code") file: MultipartFile,
-        @RequestParam("version") version: String
-    ): String {
-        val inputStream = file.inputStream
-        return service.executeSnippet2(inputStream, version)
-    }
 }
