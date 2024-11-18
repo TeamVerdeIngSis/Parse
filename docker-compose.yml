@@ -9,6 +9,11 @@ services:
         - github_username
     ports:
       - "8081:8081"
+    environment:
+      NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY}
+      NEW_RELIC_APP_NAME: 'parseService2'
+      NEW_RELIC_AGENT_ENABLED: true
+      NEW_RELIC_LOG_EXTENSION_ADD_MDC: true
 
 secrets:
   github_token:

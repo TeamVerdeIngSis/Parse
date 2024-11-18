@@ -46,6 +46,9 @@ dependencies {
  implementation 'printScript:ast:1.1.24'
  implementation 'printScript:cli:1.1.24'
 
+ implementation 'com.newrelic.agent.java:newrelic-api:7.6.0'
+
+
 }
 
 kotlin {
