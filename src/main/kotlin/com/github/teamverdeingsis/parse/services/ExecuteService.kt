@@ -14,6 +14,10 @@ import java.io.InputStream
 
 @Service
 class ExecuteService {
+
+    fun hola(): String {
+        return "Hola"
+    }
     fun executeSnippet(code: String, version: String): String {
         val codeToInputStream: InputStream = code.byteInputStream()
         val reader = Reader(codeToInputStream)
