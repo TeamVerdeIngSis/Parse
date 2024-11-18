@@ -23,10 +23,10 @@ class ExecuteController(private val service: ExecuteService) {
         return service.executeSnippet(code, version)
     }
 
-    @GetMapping("/hey")
+    @GetMapping("/hola")
     fun hey(): String {
         println("AAAA")
-        return "Hey!"
+        return service.hola()
     }
 
 }
