@@ -1,4 +1,4 @@
-package com.github.teamverdeingsis.snippets.server
+package com.github.teamverdeingsis.parse.server
 
 import jakarta.servlet.Filter
 import jakarta.servlet.FilterChain
@@ -14,24 +14,26 @@ import java.io.IOException
 import java.util.UUID
 
 @Component
-@Order(1)
+@Order(1) // Ejecutar antes de otros filtros
 class CorrelationIdFilter : Filter {
+
     @Throws(IOException::class, ServletException::class)
     override fun doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
         if (request is HttpServletRequest && response is HttpServletResponse) {
             var correlationId = request.getHeader(CORRELATION_ID_HEADER)
-            if (correlationId == null) {
-                correlationId = UUID.randomUUID().toString()
+            if (correlationId.isNullOrEmpty()) {
+                correlationId = UUID.randomUUID().toString() // Generar si no existe
             }
 
+            // Configurar en MDC y en el header de respuesta
             MDC.put(CORRELATION_ID_KEY, correlationId)
-
             response.setHeader(CORRELATION_ID_HEADER, correlationId)
 
             try {
+                logger.info("CorrelationId set for request: $correlationId")
                 chain.doFilter(request, response)
             } finally {
-                MDC.remove(CORRELATION_ID_KEY)
+                MDC.remove(CORRELATION_ID_KEY) // Limpieza del MDC
             }
         } else {
             chain.doFilter(request, response)
@@ -41,5 +43,7 @@ class CorrelationIdFilter : Filter {
     companion object {
         const val CORRELATION_ID_KEY: String = "correlation-id"
         const val CORRELATION_ID_HEADER: String = "X-Correlation-Id"
+
+        private val logger = org.slf4j.LoggerFactory.getLogger(CorrelationIdFilter::class.java)
     }
 }
