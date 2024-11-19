@@ -1,7 +1,7 @@
 package com.github.teamverdeingsis.parse.interceptor
 
 
-import com.github.teamverdeingsis.snippets.server.CorrelationIdFilter
+import com.github.teamverdeingsis.parse.server.CorrelationIdFilter
 import org.slf4j.MDC
 import org.springframework.http.HttpRequest
 import org.springframework.http.client.ClientHttpRequestExecution
