@@ -5,31 +5,68 @@ import factory.LinterFactory
 import factory.ParserFactory
 import linter.LinterError
 import org.springframework.stereotype.Service
+import org.springframework.web.client.RestTemplate
 import reader.Reader
 import java.io.InputStream
-import java.nio.file.Files
-import java.nio.file.Paths
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
+import com.github.teamverdeingsis.parse.entity.Rule
+import java.io.File
 
 @Service
-class LinterService {
-    fun lintSnippet(code: String, version: String): List<LinterError> {
-        val codeToInputStream: InputStream = code.byteInputStream()
-        val reader = Reader(codeToInputStream)
-        val configFilePath = "src\\main\\resources\\linter-config.json"
-        val path = Paths.get(configFilePath)
-        val rules: InputStream = Files.newInputStream(path)
-        val lexer = when (version) {
-            "1.1" -> LexerFactory().createLexer1_1(reader)
-            else -> LexerFactory().createLexer1_0(reader)
+class LinterService(private val restTemplate: RestTemplate) {
+    fun lintSnippet(snippetId: String, userId: String): List<LinterError> {
+        println("Llegué al linterService con estos valores $snippetId y $userId")
+
+        // Obtén el código del snippet
+        val snippetURL = "http://localhost:8080/v1/asset/snippets/$snippetId"
+        val code = restTemplate.getForObject(snippetURL, String::class.java) ?: return emptyList()
+
+        // Obtén las reglas de linting
+        val lintingRulesURL = "http://localhost:8080/v1/asset/linting/$userId"
+        val rulesJson = restTemplate.getForObject(lintingRulesURL, String::class.java) ?: return emptyList()
+
+        println("NOSENOSENOSE")
+        println(rulesJson)
+
+        // Deserializar las reglas
+        val mapper = jacksonObjectMapper()
+        val rules: List<Rule> = mapper.readValue(rulesJson)
+
+        // Procesa cada regla activa
+        val linterResults = mutableListOf<LinterError>()
+        rules.filter { it.isActive }.forEach { rule ->
+            val config = when (rule.name) {
+                "snake-case-variables" -> mapOf("identifier_format" to "snake case")
+                "camel-case-variables" -> mapOf("identifier_format" to "camel case")
+                "mandatory-variable-or-literal-in-println" -> mapOf("mandatory-variable-or-literal-in-println" to true)
+                "read-input-with-simple-argument" -> mapOf("read-input-with-simple-argument" to true)
+                else -> null
+            }
+
+            if (config != null) {
+                // Serializar la configuración a JSON
+                val configJsonString = mapper.writeValueAsString(config)
+
+                // Escribe la configuración en un archivo temporal
+                val tempFile = File.createTempFile("linter-config", ".json")
+                tempFile.writeText(configJsonString)
+                println("Archivo temporal creado para ${rule.name}: ${tempFile.absolutePath}")
+
+                // Procesa el snippet con la configuración actual
+                val codeToInputStream: InputStream = code.byteInputStream()
+                val reader = Reader(codeToInputStream)
+
+                val lexer = LexerFactory().createLexer1_1(reader)
+                val parserDirector = ParserFactory().createParser1_1(lexer)
+                val linter = LinterFactory().createLinter1_1(parserDirector, tempFile.inputStream())
+
+                linterResults.addAll(linter.lint().toList())
+            }
         }
-        val parserDirector = when (version) {
-            "1.1" -> ParserFactory().createParser1_1(lexer)
-            else -> ParserFactory().createParser1_0(lexer)
-        }
-        val linter = when (version) {
-            "1.1" -> LinterFactory().createLinter1_1(parserDirector, rules)
-            else -> LinterFactory().createLinter1_0(parserDirector, rules)
-        }
-        return linter.lint().toList()
+
+        return linterResults
     }
+
+
 }
