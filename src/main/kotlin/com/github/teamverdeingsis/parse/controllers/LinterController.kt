@@ -14,9 +14,10 @@ class LinterController(private val service: LinterService) {
 
     @PostMapping("/lint")
     fun lint(@RequestBody request: LinterDTO): List<LinterError> {
-        val code = request.code
-        val version = request.version
-
-        return service.lintSnippet(code, version)
+        println("llegue al linterController con estos valores ${request.snippetId} y ${request.userId}")
+        val response = service.lintSnippet(request.snippetId, request.userId)
+        println("OOOOOOOOOOOOOOOOOOOOOOOO")
+        println(response)
+        return response
     }
 }

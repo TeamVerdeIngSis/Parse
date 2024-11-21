@@ -1,6 +1,6 @@
 package com.github.teamverdeingsis.parse.dtos
 
 data class LinterDTO(
-    val code: String,
-    val version: String
+    val snippetId: String,
+    val userId: String
 )
