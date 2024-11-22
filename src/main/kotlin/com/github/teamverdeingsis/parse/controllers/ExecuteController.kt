@@ -33,6 +33,7 @@ class ExecuteController(private val service: ExecuteService) {
 
         return service.test(version, snippetId, inputs, outputs)
     }
+
     private val logger = LoggerFactory.getLogger(ExecuteController::class.java)
 
     @GetMapping("/hola")
