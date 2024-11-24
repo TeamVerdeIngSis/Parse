@@ -19,11 +19,11 @@ class LinterService(private val restTemplate: RestTemplate) {
         println("Llegué al linterService con estos valores $snippetId y $userId")
 
         // Obtén el código del snippet
-        val snippetURL = "http://localhost:8080/v1/asset/snippets/$snippetId"
+        val snippetURL = "http://localhost:8083/v1/asset/snippets/$snippetId"
         val code = restTemplate.getForObject(snippetURL, String::class.java) ?: return emptyList()
 
         // Obtén las reglas de linting
-        val lintingRulesURL = "http://localhost:8080/v1/asset/linting/$userId"
+        val lintingRulesURL = "http://localhost:8083/v1/asset/linting/$userId"
         val rulesJson = restTemplate.getForObject(lintingRulesURL, String::class.java) ?: return emptyList()
 
         println("NOSENOSENOSE")

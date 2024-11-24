@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class ParseApplication
 
 fun main(args: Array<String>) {
-	runApplication<ParseApplication>(*args)
+    runApplication<ParseApplication>(*args)
 }
