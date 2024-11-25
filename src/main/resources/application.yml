@@ -1,0 +1,29 @@
+# Configuración de la base de datos
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:${DB_PORT:${DB_NAME}}}  # Uso de expresiones anidadas para manejar valores por defecto
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+  freemarker: # Desactiva FreeMarker si no lo usas
+    enabled: false
+
+# Configuración del servidor
+server:
+  port: ${SERVER_PORT:8081}  # Parámetro para permitir cambiar el puerto fácilmente
+
+# Configuración del Stream
+stream:
+  lintingKey: "linter_stream"
+  formattingKey: "formatter_stream"
+
+groups:
+  linting: "linter_group"
+  formatting: "formatter_group"

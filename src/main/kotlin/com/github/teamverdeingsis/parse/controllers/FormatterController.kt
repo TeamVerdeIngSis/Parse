@@ -14,9 +14,6 @@ class FormatterController(private val service: FormatterService) {
 
     @PostMapping("/format")
     fun format(@RequestBody request: FormatterDTO): String {
-        val code = request.code
-        val version = request.version
-
-        return service.formatSnippet(code, version)
+        return service.formatSnippet(request.snippetId, request.userId)
     }
 }
