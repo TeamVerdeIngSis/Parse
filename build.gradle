@@ -20,11 +20,19 @@ repositories {
  maven {
   url = uri("https://maven.pkg.github.com/FedeKraft/printScript2")
   credentials {
-   username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
-   password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+   username = project.findProperty("github.user") ?: System.getenv("GITHUB_USERNAME")
+   password = project.findProperty("github.token") ?: System.getenv("GITHUB_TOKEN")
   }
  }
 
+ maven {
+  name = "GitHubPackagesAustral"
+  url = uri("https://maven.pkg.github.com/austral-ingsis/class-redis-streams")
+  credentials {
+   username = project.findProperty("github.user") ?: System.getenv("GITHUB_ACTOR")
+   password = project.findProperty("github.token") ?: System.getenv("GITHUB_TOKEN")
+  }
+ }
  maven {
   name = "GitHubPackagesAustral"
   url = uri("https://maven.pkg.github.com/austral-ingsis/class-redis-streams")
@@ -47,13 +55,13 @@ dependencies {
  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
  // Implementación de PrintScript CLI
- implementation 'printScript:lexer:1.1.24'
- implementation 'printScript:parser:1.1.24'
- implementation 'printScript:interpreter:1.1.24'
- implementation 'printScript:linter:1.1.24'
- implementation 'printScript:formatter:1.1.24'
- implementation 'printScript:ast:1.1.24'
- implementation 'printScript:cli:1.1.24'
+ implementation 'printScript:lexer:1.1.27'
+ implementation 'printScript:parser:1.1.27'
+ implementation 'printScript:interpreter:1.1.27'
+ implementation 'printScript:linter:1.1.27'
+ implementation 'printScript:formatter:1.1.27'
+ implementation 'printScript:ast:1.1.27'
+ implementation 'printScript:cli:1.1.27'
 
  implementation 'com.newrelic.agent.java:newrelic-api:7.6.0'
 
@@ -61,11 +69,12 @@ dependencies {
  implementation("org.springframework.boot:spring-boot-starter-webflux") // reactive webapp, requests simultaneously.
  implementation 'org.austral.ingsis:redis-streams-flux:0.1.13'
  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
- implementation("org.springframework.boot:spring-boot-starter-data-redis")\
+ implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
 
  implementation("org.springframework.boot:spring-boot-starter-data-redis-reactive")
  implementation("com.fasterxml.jackson.module:jackson-module-kotlin") // Para soporte de Kotlin con Jackson
+ implementation("org.springframework.security:spring-security-oauth2-jose")
 }
 
 

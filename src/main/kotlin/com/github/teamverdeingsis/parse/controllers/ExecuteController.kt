@@ -31,13 +31,12 @@ class ExecuteController(private val service: ExecuteService) {
         val inputs = testDto.inputs
         val outputs = testDto.outputs
 
-        return service.test(version, snippetId, inputs, outputs)
+        return service.test(version, snippetId.toString(), inputs, outputs)
     }
     private val logger = LoggerFactory.getLogger(ExecuteController::class.java)
 
     @GetMapping("/hola")
     fun hey(): String {
-        println("Jijo")
         logger.info("Executing /hola endpoint")
         return service.hola()
     }
