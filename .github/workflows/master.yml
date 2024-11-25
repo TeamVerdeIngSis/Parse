@@ -6,6 +6,11 @@ on:
       - main
       - dev
 
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+
 jobs:
   continuous-integration:
     name: Continuous Integration
@@ -23,8 +28,7 @@ jobs:
       actor: ${{ github.actor }}
       host: ${{ github.ref_name == 'main' && '172.179.233.92' || '4.242.32.158' }}
       user: teamVerde1
-      container_name: 'printscript-api'
+      container_name: 'parse-service-infra'
     secrets:
       token: ${{ secrets.TOKEN }}
       key: ${{ secrets.SSH_PRIVATE_KEY }}
-
