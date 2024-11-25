@@ -20,7 +20,7 @@ jobs:
     with:
       registry: ghcr.io
       image_name: teamverdeingsis/parse:latest
-      actor: ${{ secrets.USERNAME }}
+      actor: ${{ github.actor }}
       host: ${{ github.ref_name == 'main' && '172.179.233.92' || '4.242.32.158' }}
       user: teamVerde1
       container_name: 'printscript-api'
