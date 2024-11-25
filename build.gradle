@@ -20,8 +20,17 @@ repositories {
  maven {
   url = uri("https://maven.pkg.github.com/FedeKraft/printScript2")
   credentials {
-   username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
-   password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+   username = project.findProperty("github.user") ?: System.getenv("GITHUB_USERNAME")
+   password = project.findProperty("github.token") ?: System.getenv("GITHUB_TOKEN")
+  }
+ }
+
+ maven {
+  name = "GitHubPackagesAustral"
+  url = uri("https://maven.pkg.github.com/austral-ingsis/class-redis-streams")
+  credentials {
+   username = project.findProperty("github.user") ?: System.getenv("GITHUB_ACTOR")
+   password = project.findProperty("github.token") ?: System.getenv("GITHUB_TOKEN")
   }
  }
  maven {
@@ -56,10 +65,12 @@ dependencies {
 
  implementation 'com.newrelic.agent.java:newrelic-api:7.6.0'
 
+
  implementation("org.springframework.boot:spring-boot-starter-webflux") // reactive webapp, requests simultaneously.
  implementation 'org.austral.ingsis:redis-streams-flux:0.1.13'
  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
  implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
 
  implementation("org.springframework.boot:spring-boot-starter-data-redis-reactive")
  implementation("com.fasterxml.jackson.module:jackson-module-kotlin") // Para soporte de Kotlin con Jackson
