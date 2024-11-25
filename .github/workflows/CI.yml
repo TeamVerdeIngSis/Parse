@@ -1,0 +1,27 @@
+name: Continuous Integration
+
+on:
+  workflow_call:
+    secrets:
+      token:
+        description: 'Personal Access Token'
+        required: true
+
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: 21
+          distribution: 'adopt'
+
+      - name: Build and Test
+        env:
+          GITHUB_TOKEN: ${{ secrets.token }}
+        run: ./gradlew build
