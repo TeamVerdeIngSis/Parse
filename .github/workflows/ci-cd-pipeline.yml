@@ -20,10 +20,14 @@ jobs:
           java-version: 21
           distribution: 'adopt'
 
+      - name: Set Execute Permissions
+        run: chmod +x ./gradlew
+
       - name: Run Build
         run: ./gradlew build
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }} # Usando el PAT_TOKEN para autenticación
+          GITHUB_ACTOR: ${{ secrets.USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
 
   continuous-delivery:
     name: Continuous Delivery
