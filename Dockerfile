@@ -6,13 +6,9 @@ FROM gradle:8.10-jdk21 AS builder
 COPY . /home/gradle/src
 WORKDIR /home/gradle/src
 
-# Pasa las variables de entorno USERNAME y PAT_TOKEN como argumentos de compilación
-ARG USERNAME
-ARG PAT_TOKEN
-
-# Configura las credenciales para acceder al repositorio privado de Maven
-RUN echo "machine maven.pkg.github.com login $USERNAME password $PAT_TOKEN" > ~/.netrc && \
-    gradle build
+# Usa BuildKit para pasar secretos
+RUN --mount=type=secret,id=github_credentials \
+    bash -c 'cat /run/secrets/github_credentials > ~/.netrc && gradle build'
 
 # Stage 2: Create a lightweight image for running the application
 FROM eclipse-temurin:21-jdk
