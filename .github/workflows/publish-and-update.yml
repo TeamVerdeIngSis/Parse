@@ -67,7 +67,7 @@ jobs:
           tags: ${{ inputs.registry }}/${{ inputs.image_name }}
           push: true
           secrets: |
-            GITHUB_TOKEN=${{ secrets.TOKEN }}
+            TOKEN: ${{ secrets.TOKEN }}
 
   update-vm:
     name: Update Virtual Machine
