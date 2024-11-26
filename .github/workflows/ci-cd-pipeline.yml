@@ -47,8 +47,8 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ghcr.io/teamverdeingsis/parse:${{ github.ref_name }} # Cambia "teamverdeingsis/parse" según tu imagen
-            ghcr.io/teamverdeingsis/parse:latest # Etiqueta "latest" para producción
+            ghcr.io/teamverdeingsis/parse:${{ github.ref_name }}
+            ghcr.io/teamverdeingsis/parse:latest
 
   update-virtual-machine:
     name: Update Virtual Machine
