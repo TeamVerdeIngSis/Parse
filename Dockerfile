@@ -7,8 +7,9 @@ COPY . /home/gradle/src
 WORKDIR /home/gradle/src
 
 # Use BuildKit secrets for secure authentication
-RUN --mount=type=secret,id=PAT_TOKEN,required \
+RUN --mount=type=secret,id=PAT_TOKEN,env=GITHUB_TOKEN,required \
     gradle build
+
 
 # Second stage: Create a lightweight image for running the application
 FROM eclipse-temurin:21-jdk
