@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 
-
 @RestController
 @RequestMapping("/api/parser")
 class ExecuteController(private val service: ExecuteService) {
@@ -31,9 +30,8 @@ class ExecuteController(private val service: ExecuteService) {
         val inputs = testDto.inputs
         val outputs = testDto.outputs
 
-        return service.test(version, snippetId.toString(), inputs, outputs)
+        return service.test(version, snippetId, inputs, outputs)
     }
-
     private val logger = LoggerFactory.getLogger(ExecuteController::class.java)
 
     @GetMapping("/hola")
