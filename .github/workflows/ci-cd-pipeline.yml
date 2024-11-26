@@ -62,8 +62,9 @@ jobs:
         uses: appleboy/ssh-action@v1.1.0
         with:
           host: ${{ github.ref_name == 'main' && '172.179.233.92' || '4.242.32.158' }}
-          user: teamVerde1
+          username: teamVerde1
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
           script: |
             sudo docker stop parse-service-infra || true
             sudo docker rm parse-service-infra || true
