@@ -1,12 +1,15 @@
 # syntax=docker/dockerfile:1
 FROM gradle:8.10-jdk21 AS builder
 
+ARG GITHUB_ACTOR
+ARG GITHUB_TOKEN
+ENV GITHUB_ACTOR=$GITHUB_ACTOR
+ENV GITHUB_TOKEN=$GITHUB_TOKEN
+
 COPY . /home/gradle/src
 WORKDIR /home/gradle/src
 
-# Use BuildKit secrets for secure authentication
-RUN --mount=type=secret,id=PAT_TOKEN,env=GITHUB_TOKEN,required \
-    gradle build
+RUN gradle build
 
 FROM eclipse-temurin:21-jdk
 RUN mkdir /app

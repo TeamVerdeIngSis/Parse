@@ -3,7 +3,7 @@ name: Continuous Integration
 on:
   workflow_call:
     secrets:
-      token:
+      GITHUB_TOKEN:
         description: 'Personal Access Token'
         required: true
 
@@ -23,5 +23,5 @@ jobs:
 
       - name: Build and Test
         env:
-          GITHUB_TOKEN: ${{ secrets.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./gradlew build
