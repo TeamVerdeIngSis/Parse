@@ -28,7 +28,7 @@ on:
         required: true
         type: string
     secrets:
-      token:
+      PAT_TOKEN:
         description: 'Personal Access Token with sufficient rights to publish Docker image'
         required: true
       key:
@@ -57,7 +57,7 @@ jobs:
         with:
           registry: ${{ inputs.registry }}
           username: ${{ inputs.actor }}
-          password: ${{ secrets.token }}
+          password: ${{ secrets.PAT_TOKEN }}
 
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v2
@@ -67,7 +67,7 @@ jobs:
           tags: ${{ inputs.registry }}/${{ inputs.image_name }}
           push: true
           secrets: |
-            TOKEN: ${{ secrets.TOKEN }}
+            PAT_TOKEN=${{ secrets.PAT_TOKEN }}
 
   update-vm:
     name: Update Virtual Machine
