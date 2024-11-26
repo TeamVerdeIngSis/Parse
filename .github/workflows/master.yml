@@ -16,7 +16,7 @@ jobs:
     name: Continuous Integration
     uses: ./.github/workflows/CI.yml
     secrets:
-      TOKEN: ${{ secrets.TOKEN }} # Corregido el nombre del secreto para que sea coherente
+      PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
 
   continuous-delivery:
     name: Continuous Delivery
@@ -30,5 +30,5 @@ jobs:
       user: teamVerde1
       container_name: 'parse-service-infra'
     secrets:
-      PAT_TOKEN: ${{ secrets.PAT_TOKEN }} # Asegúrate de que `PAT_TOKEN` esté definido en los secretos
+      PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
       key: ${{ secrets.SSH_PRIVATE_KEY }}
