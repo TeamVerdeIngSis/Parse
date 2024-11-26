@@ -38,7 +38,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.PAT_TOKEN }} # Usando PAT_TOKEN en lugar de TOKEN
+          password: ${{ secrets.PAT_TOKEN }}
 
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v2
@@ -49,8 +49,9 @@ jobs:
           tags: |
             ghcr.io/teamverdeingsis/parse:${{ github.ref_name }}
             ghcr.io/teamverdeingsis/parse:latest
-          secrets: |
-            id=github_credentials,src=<(echo -e "machine maven.pkg.github.com login ${{ secrets.USERNAME }} password ${{ secrets.PAT_TOKEN }}")
+          build-args: |
+            USERNAME=${{ secrets.USERNAME }}
+            PAT_TOKEN=${{ secrets.PAT_TOKEN }}
 
   update-virtual-machine:
     name: Update Virtual Machine
@@ -62,7 +63,7 @@ jobs:
         with:
           host: ${{ github.ref_name == 'main' && '172.179.233.92' || '4.242.32.158' }}
           user: teamVerde1
-          key: ${{ secrets.SSH_PRIVATE_KEY }} # Usando el secreto SSH_PRIVATE_KEY para la conexión SSH
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             sudo docker stop parse-service-infra || true
             sudo docker rm parse-service-infra || true
