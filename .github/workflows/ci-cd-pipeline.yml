@@ -49,6 +49,9 @@ jobs:
           tags: |
             ghcr.io/teamverdeingsis/parse:${{ github.ref_name }}
             ghcr.io/teamverdeingsis/parse:latest
+          build-args: |
+            USERNAME=${{ secrets.USERNAME }}
+            PAT_TOKEN=${{ secrets.PAT_TOKEN }}
 
   update-virtual-machine:
     name: Update Virtual Machine
