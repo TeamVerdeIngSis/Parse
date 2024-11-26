@@ -16,7 +16,7 @@ jobs:
     name: Continuous Integration
     uses: ./.github/workflows/CI.yml
     secrets:
-      GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+      PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
 
   continuous-delivery:
     name: Continuous Delivery
