@@ -1,8 +1,9 @@
 plugins {
  id 'org.jetbrains.kotlin.jvm' version '1.9.25'
  id 'org.jetbrains.kotlin.plugin.spring' version '1.9.25'
- id 'org.springframework.boot' version '3.3.0'
+ id 'org.springframework.boot' version '3.3.4'
  id 'io.spring.dependency-management' version '1.1.6'
+ id 'maven-publish'
 }
 
 group = 'teamVerde'
@@ -21,10 +22,8 @@ configurations {
 }
 
 repositories {
- // Repositorios públicos
  mavenCentral()
- gradlePluginPortal()
-
+ mavenCentral()
  // Repositorio privado de PrintScript
  maven {
   name = "PrintScriptPackages"
@@ -37,27 +36,33 @@ repositories {
 
  // Repositorio privado de Redis Streams
  maven {
-  name = "RedisStreamsPackages"
+  name = "GitHubPackagesAustral"
   url = uri("https://maven.pkg.github.com/austral-ingsis/class-redis-streams")
   credentials {
-   username = System.getenv("GITHUB_ACTOR")
-   password = System.getenv("GITHUB_TOKEN")
+   username = project.findProperty("github.user") ?: System.getenv("GITHUB_ACTOR")
+   password = project.findProperty("github.token") ?: System.getenv("GITHUB_TOKEN")
   }
  }
 }
 
 dependencies {
- implementation 'com.nimbusds:nimbus-jose-jwt:9.31'
- // Dependencias de Spring Boot y otras
- implementation 'org.springframework.boot:spring-boot-starter-actuator'
  implementation 'org.springframework.boot:spring-boot-starter-web'
  implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
  implementation 'org.jetbrains.kotlin:kotlin-reflect'
  developmentOnly 'org.springframework.boot:spring-boot-devtools'
  annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
  testImplementation 'org.springframework.boot:spring-boot-starter-test'
  testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+
+
+ implementation 'com.nimbusds:nimbus-jose-jwt:9.37.2'
+ // Dependencias de Spring Boot y otras
+
+
+
 
  // Implementación de PrintScript
  implementation 'printScript:lexer:1.1.27'

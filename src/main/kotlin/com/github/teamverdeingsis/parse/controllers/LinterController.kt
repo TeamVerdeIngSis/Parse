@@ -14,6 +14,7 @@ class LinterController(private val service: LinterService) {
 
     @PostMapping("/lint")
     fun lint(@RequestBody request: SnippetMessage): List<LinterError> {
+        println("AAA")
         try {
             val response = service.lintSnippet(request.userId, request.snippetId)
         return response
