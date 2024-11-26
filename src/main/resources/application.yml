@@ -17,7 +17,7 @@ spring:
 
 # Configuración del servidor
 server:
-  port: ${SERVER_PORT:8081}  # Parámetro para permitir cambiar el puerto fácilmente
+  port: ${SERVER_PORT:8089}  # Parámetro para permitir cambiar el puerto fácilmente
 
 # Configuración del Stream
 stream:
