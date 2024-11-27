@@ -54,29 +54,24 @@ class ExecuteService(private val assetService: AssetService) {
 
         val results = interpreter.interpret()
         val normalizedResults = normalizeResults(results)
+        println("Interpreter results: $results")
+        println("Normalized results: $normalizedResults")
+        println("Original outputs: $outputs")
         val normalizedOutputs = normalizeResults(outputs)
+        println("Normalizaed outputs: $normalizedOutputs")
         val finalResults = compareResults(normalizedResults, normalizedOutputs)
+        println("Final results: $finalResults")
         return finalResults
     }
 
     fun normalizeResults(results: List<Any?>): List<String> {
-        return results.map {
-            when (it) {
-                is Number -> it.toString() // Convertir números a cadenas
-                is String -> it.trim() // Eliminar espacios en blanco adicionales
-                else -> it.toString()
-            }
-        }
+        return results.map { normalizeValue(it) } // Reutilizar normalizeValue para consistencia
     }
 
-    fun normalizeString(value: String): String {
-        return value.trim().removeSurrounding("'").removeSurrounding("\"")
-    }
-
-    fun normalizeValue(value: Any): String {
+    fun normalizeValue(value: Any?): String {
         return when (value) {
-            is Number -> value.toString().removeSuffix(".0") // Convertir números y remover ".0"
-            is String -> normalizeString(value)
+            is Number -> value.toString().removeSuffix(".0") // Eliminar el .0 si está presente
+            is String -> value.trim() // Recortar espacios adicionales
             else -> value.toString()
         }
     }
@@ -88,9 +83,7 @@ class ExecuteService(private val assetService: AssetService) {
             for (i in outputs.size until results.size) {
                 finalResults.add("Unexpected extra output: ${results[i]}")
             }
-        }
-
-        else if (results.size < outputs.size) {
+        } else if (results.size < outputs.size) {
             for (i in results.size until outputs.size) {
                 finalResults.add("Missing expected output: ${outputs[i]}")
             }
@@ -103,7 +96,7 @@ class ExecuteService(private val assetService: AssetService) {
                 finalResults.add("Expected '$normalizedExpected' but got '$normalizedActual'")
             }
         }
-
         return finalResults
     }
+
 }

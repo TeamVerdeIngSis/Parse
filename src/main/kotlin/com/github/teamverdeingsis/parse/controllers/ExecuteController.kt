@@ -25,12 +25,8 @@ class ExecuteController(private val service: ExecuteService) {
 
     @PostMapping("/test")
     fun test(@RequestBody testDto: TestDto): List<String> {
-        val version = testDto.version
-        val snippetId = testDto.snippetId
-        val inputs = testDto.inputs
-        val outputs = testDto.outputs
-
-        return service.test(version, snippetId, inputs, outputs)
+        println("Received testDto: $testDto") // Log para depuración
+        return service.test(testDto.version, testDto.snippetId, testDto.inputs, testDto.outputs)
     }
 
     private val logger = LoggerFactory.getLogger(ExecuteController::class.java)
