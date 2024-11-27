@@ -1,0 +1,77 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  continuous-integration:
+    name: Continuous Integration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v2
+        with:
+          java-version: 21
+          distribution: 'adopt'
+
+      - name: Set Execute Permissions
+        run: chmod +x ./gradlew
+
+      - name: Run Build
+        run: ./gradlew build
+        env:
+          GITHUB_ACTOR: ${{ secrets.USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+
+  continuous-delivery:
+    name: Continuous Delivery
+    needs: continuous-integration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Log in to Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PAT_TOKEN }}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ghcr.io/teamverdeingsis/parse:${{ github.ref_name }}
+            ghcr.io/teamverdeingsis/parse:latest
+          build-args: |
+            USERNAME=${{ secrets.USERNAME }}
+            PAT_TOKEN=${{ secrets.PAT_TOKEN }}
+
+  update-virtual-machine:
+    name: Update Virtual Machine
+    needs: continuous-delivery
+    runs-on: ubuntu-latest
+    steps:
+      - name: Execute Remote SSH Commands
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host: ${{ github.ref_name == 'main' && '172.179.233.92' || '4.242.32.158' }}
+          username: teamVerde1
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            sudo docker stop parse-service-infra || true
+            sudo docker rm parse-service-infra || true
+            sudo docker rmi ghcr.io/teamverdeingsis/parse:latest || true
+            sudo docker pull ghcr.io/teamverdeingsis/parse:latest
+            sudo docker run -d --name parse-service-infra -p 8081:8081 ghcr.io/teamverdeingsis/parse:latest

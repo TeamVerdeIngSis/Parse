@@ -1,12 +1,13 @@
 plugins {
  id 'org.jetbrains.kotlin.jvm' version '1.9.25'
  id 'org.jetbrains.kotlin.plugin.spring' version '1.9.25'
- id 'org.springframework.boot' version '3.3.5'
+ id 'org.springframework.boot' version '3.3.4'
  id 'io.spring.dependency-management' version '1.1.6'
+ id 'maven-publish'
 }
 
-group = 'com.github.teamverdeingsis'
-version = '0.0.2-SNAPSHOT'
+group = 'teamVerde'
+version = '0.0.1-SNAPSHOT'
 
 java {
  toolchain {
@@ -14,25 +15,27 @@ java {
  }
 }
 
+configurations {
+ compileOnly {
+  extendsFrom annotationProcessor
+ }
+}
+
 repositories {
+ mavenLocal()
  mavenCentral()
  gradlePluginPortal()
+ // Repositorio privado de PrintScript
  maven {
+  name = "PrintScriptPackages"
   url = uri("https://maven.pkg.github.com/FedeKraft/printScript2")
-  credentials {
-   username = project.findProperty("github.user") ?: System.getenv("GITHUB_USERNAME")
-   password = project.findProperty("github.token") ?: System.getenv("GITHUB_TOKEN")
-  }
- }
-
- maven {
-  name = "GitHubPackagesAustral"
-  url = uri("https://maven.pkg.github.com/austral-ingsis/class-redis-streams")
   credentials {
    username = project.findProperty("github.user") ?: System.getenv("GITHUB_ACTOR")
    password = project.findProperty("github.token") ?: System.getenv("GITHUB_TOKEN")
   }
  }
+
+ // Repositorio privado de Redis Streams
  maven {
   name = "GitHubPackagesAustral"
   url = uri("https://maven.pkg.github.com/austral-ingsis/class-redis-streams")
@@ -44,38 +47,39 @@ repositories {
 }
 
 dependencies {
- // Dependencias de Spring Boot
- implementation 'org.springframework.boot:spring-boot-starter-actuator'
  implementation 'org.springframework.boot:spring-boot-starter-web'
  implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
  implementation 'org.jetbrains.kotlin:kotlin-reflect'
  developmentOnly 'org.springframework.boot:spring-boot-devtools'
+ annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
  testImplementation 'org.springframework.boot:spring-boot-starter-test'
  testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
- // Implementación de PrintScript CLI
- implementation 'printScript:lexer:1.1.24'
- implementation 'printScript:parser:1.1.24'
- implementation 'printScript:interpreter:1.1.24'
- implementation 'printScript:linter:1.1.24'
- implementation 'printScript:formatter:1.1.24'
- implementation 'printScript:ast:1.1.24'
- implementation 'printScript:cli:1.1.24'
-
- implementation 'com.newrelic.agent.java:newrelic-api:7.6.0'
 
 
- implementation("org.springframework.boot:spring-boot-starter-webflux") // reactive webapp, requests simultaneously.
+ implementation 'com.nimbusds:nimbus-jose-jwt:9.37.2'
+ // Dependencias de Spring Boot y otras
+
+
+
+
+ // Implementación de PrintScript
+ implementation 'printScript:lexer:1.1.27'
+ implementation 'printScript:parser:1.1.27'
+ implementation 'printScript:interpreter:1.1.27'
+ implementation 'printScript:linter:1.1.27'
+ implementation 'printScript:formatter:1.1.27'
+ implementation 'printScript:ast:1.1.27'
+ implementation 'printScript:cli:1.1.27'
+
+ // Redis Streams y otras
  implementation 'org.austral.ingsis:redis-streams-flux:0.1.13'
- implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
- implementation("org.springframework.boot:spring-boot-starter-data-redis")\
-
-
- implementation("org.springframework.boot:spring-boot-starter-data-redis-reactive")
- implementation("com.fasterxml.jackson.module:jackson-module-kotlin") // Para soporte de Kotlin con Jackson
+ implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-reactor'
+ implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+ implementation 'com.newrelic.agent.java:newrelic-api:7.6.0'
 }
-
 
 kotlin {
  compilerOptions {

@@ -1,19 +1,31 @@
 # syntax=docker/dockerfile:1
-# Dockerfile for Kotlin Spring Boot Project using Multi-Stage Build
-FROM gradle:8.10-jdk21 AS builder
+
+# Etapa 1: Construcción de la aplicación
+FROM --platform=linux/amd64 gradle:8.10-jdk21 AS build
+LABEL org.opencontainers.image.source="https://github.com/teamverdeingsis/parse"
+
+# Build arguments para pasar credenciales
+ARG USERNAME
+ARG PAT_TOKEN
+ENV GITHUB_ACTOR=$USERNAME
+ENV GITHUB_TOKEN=$PAT_TOKEN
+
+# Copia del código fuente y construcción
 COPY . /home/gradle/src
 WORKDIR /home/gradle/src
-RUN --mount=type=secret,id=github_token,env=GITHUB_TOKEN,required \
-    --mount=type=secret,id=github_username,env=GITHUB_USERNAME,required \
-    gradle build
+RUN gradle build
 
-# Second stage: Create a lightweight image for running the application
-FROM eclipse-temurin:21-jdk
+# Etapa 2: Imagen ligera para la ejecución
+FROM --platform=linux/amd64 eclipse-temurin:21-jdk
+EXPOSE 8081
 RUN mkdir /app
-COPY --from=builder /home/gradle/src/build/libs/*.jar /app/app.jar
 
+# Copiar el artefacto generado
+COPY --from=build /home/gradle/src/build/libs/*.jar /app/spring-boot-application.jar
+
+# Configuración de New Relic (opcional)
 COPY ./newrelic/newrelic.jar /app/newrelic.jar
 COPY ./newrelic/newrelic.yml /app/newrelic.yml
 
-ENTRYPOINT ["java","-javaagent:/app/newrelic.jar","-jar","/app/app.jar"]
-EXPOSE 8081
+# Comando de entrada para iniciar la aplicación
+ENTRYPOINT ["java", "-javaagent:/app/newrelic.jar", "-jar", "-Dspring.profiles.active=production", "/app/spring-boot-application.jar"]
