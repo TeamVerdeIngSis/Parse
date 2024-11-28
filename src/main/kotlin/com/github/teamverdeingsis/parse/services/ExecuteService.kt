@@ -7,6 +7,7 @@ import factory.ParserFactory
 import interpreter.Interpreter
 import org.springframework.stereotype.Service
 import provider.ConsoleInputProvider
+import provider.InputProvider
 import reader.Reader
 import java.io.InputStream
 
@@ -50,19 +51,37 @@ class ExecuteService(private val assetService: AssetService) {
             else -> ParserFactory().createParser1_0(lexer)
         }
         val printEmitter = PrintEmitter()
-        val interpreter = Interpreter(parser, ConsoleInputProvider(), printEmitter, ErrorCollector())
+
+        val inputAdapter = object : InputProvider {
+            private val inputQueue = inputs.toMutableList()
+
+            override fun readInput(prompt: String): Any {
+                return if (inputQueue.isNotEmpty()) {
+                    inputQueue.removeAt(0)
+                } else {
+                    "No input available"
+                }
+            }
+        }
+
+        val interpreter = Interpreter(parser, inputAdapter, printEmitter, ErrorCollector())
 
         val results = interpreter.interpret()
         val normalizedResults = normalizeResults(results)
+
         println("Interpreter results: $results")
         println("Normalized results: $normalizedResults")
         println("Original outputs: $outputs")
+
         val normalizedOutputs = normalizeResults(outputs)
-        println("Normalizaed outputs: $normalizedOutputs")
+        println("Normalized outputs: $normalizedOutputs")
+
+        // Comparar resultados con los outputs esperados
         val finalResults = compareResults(normalizedResults, normalizedOutputs)
         println("Final results: $finalResults")
         return finalResults
     }
+
 
     fun normalizeResults(results: List<Any?>): List<String> {
         return results.map { normalizeValue(it) } // Reutilizar normalizeValue para consistencia
