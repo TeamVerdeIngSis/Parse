@@ -8,7 +8,7 @@ import java.io.InputStream
 
 @Service
 class ValidateService {
-    fun validateSnippet(code: String, version: String): String {
+    fun validateSnippet(code: String, version: String): List<String> {
         val codeToInputStream: InputStream = code.byteInputStream()
         val reader = Reader(codeToInputStream)
         val lexer = when (version) {
@@ -21,9 +21,12 @@ class ValidateService {
         }
         val results = mutableListOf<String>()
         while (parser.hasNextAST()) {
-            val statement = parser.nextStatement()
-            results.add(statement.toString())
+            try {
+                parser.nextStatement()
+            } catch (e: Exception) {
+                results.add(e.message ?: "Unknown error")
+            }
         }
-        return if (results.isEmpty()) "No errors found" else results.joinToString(separator = "\n")
+        return results
     }
 }
