@@ -33,7 +33,7 @@ class AssetService(private val restTemplate: RestTemplate) {
             throw RuntimeException("Asset with ID $snippetId not found")
         }
     }
-    public fun getAsset(directory: String, snippetId: String): String? {
+    fun getAsset(directory: String, snippetId: String): String? {
         val assetServiceUrl = "http://localhost:8080/v1/asset/$directory/$snippetId"
         return try {
             restTemplate.getForObject(assetServiceUrl, String::class.java)
