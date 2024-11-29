@@ -78,5 +78,5 @@ jobs:
             sudo docker rm parse-service-infra || true
             sudo docker rmi ghcr.io/teamverdeingsis/parse:latest || true
             sudo docker pull ghcr.io/teamverdeingsis/parse:latest
-            sudo docker compose parseServiceInfra -d
+            sudo docker compose up parseServiceInfra -d
 
