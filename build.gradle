@@ -4,6 +4,7 @@ plugins {
  id 'org.springframework.boot' version '3.3.4'
  id 'io.spring.dependency-management' version '1.1.6'
  id 'maven-publish'
+ id 'jacoco'
 }
 
 group = 'teamVerde'
@@ -25,7 +26,7 @@ repositories {
  mavenLocal()
  mavenCentral()
  gradlePluginPortal()
- // Repositorio privado de PrintScript
+
  maven {
   name = "PrintScriptPackages"
   url = uri("https://maven.pkg.github.com/FedeKraft/printScript2")
@@ -35,7 +36,6 @@ repositories {
   }
  }
 
- // Repositorio privado de Redis Streams
  maven {
   name = "GitHubPackagesAustral"
   url = uri("https://maven.pkg.github.com/austral-ingsis/class-redis-streams")
@@ -47,25 +47,27 @@ repositories {
 }
 
 dependencies {
+ // Dependencias de JUnit 5
+ testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+ testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+
+ // Spring Boot Starter Test (que incluye soporte para JUnit 5)
+ testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+ // Kotlin Test support para JUnit 5
+ testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
+
+ // Mockito para pruebas con mocks
+ testImplementation 'org.mockito.kotlin:mockito-kotlin:4.1.0'
+
+ // JUnit Platform Launcher (para ejecutar las pruebas)
+ testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+ // Dependencias del proyecto
  implementation 'org.springframework.boot:spring-boot-starter-web'
  implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
  implementation 'org.jetbrains.kotlin:kotlin-reflect'
- developmentOnly 'org.springframework.boot:spring-boot-devtools'
- annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-
- testImplementation 'org.springframework.boot:spring-boot-starter-test'
- testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
- testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
-
-
  implementation 'com.nimbusds:nimbus-jose-jwt:9.37.2'
- // Dependencias de Spring Boot y otras
-
-
-
-
- // Implementación de PrintScript
  implementation 'printScript:lexer:1.1.27'
  implementation 'printScript:parser:1.1.27'
  implementation 'printScript:interpreter:1.1.27'
@@ -79,6 +81,12 @@ dependencies {
  implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-reactor'
  implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
  implementation 'com.newrelic.agent.java:newrelic-api:7.6.0'
+
+ // Devtools para desarrollo
+ developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+ // Procesador de anotaciones
+ annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 }
 
 kotlin {
@@ -89,4 +97,53 @@ kotlin {
 
 tasks.named('test') {
  useJUnitPlatform()
+ finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+ dependsOn test
+
+ reports {
+  xml {
+   destination file("$buildDir/reports/jacoco/test-coverage.xml")
+  }
+  html {
+   destination file("$buildDir/reports/jacoco/html")
+  }
+ }
+
+ classDirectories.setFrom(
+         fileTree(dir: 'build/classes/kotlin/main', includes: [
+                 'com/github/teamverdeingsis/parse/services/**/*.class'
+         ])
+ )
+}
+
+
+
+jacocoTestCoverageVerification {
+ violationRules {
+  rule {
+   limit {
+    counter = 'INSTRUCTION'
+    value = 'COVEREDRATIO'
+    minimum = 0.80
+   }
+  }
+ }
+}
+
+
+jacoco {
+ toolVersion = '0.8.9'
+}
+
+tasks.check {
+ dependsOn jacocoTestCoverageVerification
+}
+
+tasks.test {
+ useJUnitPlatform()
+ include '**/*Test.class'
+ finalizedBy jacocoTestReport
 }
