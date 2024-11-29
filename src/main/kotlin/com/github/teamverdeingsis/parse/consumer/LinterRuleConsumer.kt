@@ -39,7 +39,7 @@ class LinterRuleConsumer @Autowired constructor(
                 Conformance.COMPLIANT
             }
 
-            val url = "http://localhost:8083/updateConformance"
+            val url = "http://snippets-service-infra:8080/updateConformance"
             val requestBody = UpdateConformanceRequest(snippetId, conformance)
             val headers = HttpHeaders().apply {
                 contentType = MediaType.APPLICATION_JSON
