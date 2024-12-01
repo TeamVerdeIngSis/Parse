@@ -25,7 +25,7 @@ class FormatterService(private val assetService: AssetService) {
         println("voy a buscar las reglas del usuario $userId")
         val rulesInString: String = if (assetService.assetExists("format", userId)) {
             println("che el asset existe")
-            assetService.getAsset("format", userId) ?: ""
+            assetService.getAsset(userId,"format") ?: ""
         } else {
             println("che el asset no existe")
             RulesFactory.defaultFormattingRules().toString()
