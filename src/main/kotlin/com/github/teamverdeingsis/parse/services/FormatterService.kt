@@ -19,6 +19,7 @@ import kotlin.streams.asStream
 class FormatterService(private val assetService: AssetService) {
 
     fun formatSnippet(snippetId: String, userId: String): String {
+        println("Formateando snippet $snippetId con las reglas del usuario $userId")
         val code = assetService.getAsset("snippets", snippetId) ?: ""
         println("codee $code")
         println("voy a buscar las reglas del usuario $userId")
@@ -26,6 +27,7 @@ class FormatterService(private val assetService: AssetService) {
             println("che el asset existe")
             assetService.getAsset("format", userId) ?: ""
         } else {
+            println("che el asset no existe")
             RulesFactory.defaultFormattingRules().toString()
         }
 
@@ -37,9 +39,7 @@ class FormatterService(private val assetService: AssetService) {
             println("Error deserializando reglas: ${e.message}")
             emptyList() // Usa una lista vacía si falla la deserialización
         }
-
-        println("AAAAAAAAA")
-        println(rules)
+        println("lista de rules $rules")
         // Convertir la lista de reglas en un objeto FormattingConfig
         val config = convertRulesToConfig(rules.filter { it.isActive })
         println("Configuración de formateo obtenida: $config")

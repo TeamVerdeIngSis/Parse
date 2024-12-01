@@ -17,8 +17,7 @@ import java.io.File
 @Service
 class LinterService(private val restTemplate: RestTemplate) {
     fun lintSnippet(snippetId: String, userId: String): List<LinterError> {
-
-
+        println("voy a lintear el snippet $snippetId con las reglas del usuario $userId")
         // Obtén el código del snippet
         val snippetURL = "http://asset-service-infra:8080/v1/asset/snippets/$snippetId"
         val code = restTemplate.getForObject(snippetURL, String::class.java) ?: return emptyList()
@@ -35,7 +34,7 @@ class LinterService(private val restTemplate: RestTemplate) {
         // Procesa cada regla activa
         val linterResults = mutableListOf<LinterError>()
         val filteredRules = rules.filter { it.isActive }
-        println(filteredRules)
+        println("reglas filtradas $filteredRules")
         val config = makeLintingConfig(filteredRules)
 
         // Serializar la configuración a JSON

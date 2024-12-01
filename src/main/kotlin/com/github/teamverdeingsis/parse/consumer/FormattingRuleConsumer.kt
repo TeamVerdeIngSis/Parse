@@ -24,15 +24,14 @@ class FormattingRuleConsumer @Autowired constructor(
 
     override fun onMessage(record: ObjectRecord<String, String>) {
         try {
+            println("Checkpoint 1, formatting consumer")
             val snippetMessage = objectMapper.readValue(record.value, SnippetMessage::class.java)
             val authorization = snippetMessage.userId
             val userId = AuthorizationDecoder.decode(authorization)
             val snippetId = snippetMessage.snippetId
-            println(" Formateando snippet $snippetId con las reglas del usuario $userId")
+            println("Checkpoint 2, Formateando snippet $snippetId con las reglas del usuario $userId")
             val formattedContent = service.formatSnippet(snippetId,userId)
-
             println("Snippet formateado: $formattedContent")
-
         } catch (e: Exception) {
             println("Error al procesar el mensaje: ${e.message}")
         }

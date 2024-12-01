@@ -31,22 +31,27 @@ class LinterRuleConsumer @Autowired constructor(
 
     private fun reLintSnippet(authorization: String, snippetId: String) {
         try {
+            println("Checkpoint 1, linter consumer")
             val userId = AuthorizationDecoder.decode(authorization)
+            println("Checkpoint 2, decoded userId: $userId")
             val lintingResults = service.lintSnippet(snippetId, userId)
+            println("Checkpoint 3, linting results: $lintingResults")
             val conformance = if (lintingResults.isNotEmpty()) {
                 Conformance.NOT_COMPLIANT
             } else {
                 Conformance.COMPLIANT
             }
-
-            val url = "http://snippets-service-infra:8080/updateConformance"
+            println("Checkpoint 4, conformance: $conformance")
+            val url = "http://snippets-service-infra:8080/snippets/updateConformance"
             val requestBody = UpdateConformanceRequest(snippetId, conformance)
             val headers = HttpHeaders().apply {
                 contentType = MediaType.APPLICATION_JSON
                 set("Authorization", authorization)
             }
+            println("Checkpoint 5, updating conformance")
             val request = HttpEntity(requestBody, headers)
-            val response = restTemplate.postForObject(url, request, String::class.java)
+            restTemplate.postForObject(url, request, String::class.java)
+            println("Checkpoint 6, Conformance updated")
         } catch (e: Exception) {
             println("Error relinteando snippet con userId: ${AuthorizationDecoder.decode(authorization)} y snippetId: $snippetId - ${e.message}")
         }
