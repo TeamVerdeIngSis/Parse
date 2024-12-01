@@ -20,7 +20,7 @@ class FormatterService(private val assetService: AssetService) {
 
     fun formatSnippet(snippetId: String, userId: String): String {
         println("Formateando snippet $snippetId con las reglas del usuario $userId")
-        val code = assetService.getAsset("snippets", snippetId) ?: ""
+        val code = assetService.getAsset( snippetId,"snippets") ?: ""
         println("codee $code")
         println("voy a buscar las reglas del usuario $userId")
         val rulesInString: String = if (assetService.assetExists("format", userId)) {
