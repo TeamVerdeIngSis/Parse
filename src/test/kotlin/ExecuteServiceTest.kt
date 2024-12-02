@@ -1,17 +1,17 @@
-//package com.github.teamverdeingsis.parse.services
+// package com.github.teamverdeingsis.parse.services
 //
-//import org.junit.jupiter.api.BeforeEach
-//import org.junit.jupiter.api.Test
-//import org.mockito.Mockito
-//import org.mockito.kotlin.mock
-//import org.junit.jupiter.api.extension.ExtendWith
-//import org.mockito.junit.jupiter.MockitoExtension
-//import org.springframework.boot.test.context.SpringBootTest
-//import kotlin.test.assertEquals
+// import org.junit.jupiter.api.BeforeEach
+// import org.junit.jupiter.api.Test
+// import org.mockito.Mockito
+// import org.mockito.kotlin.mock
+// import org.junit.jupiter.api.extension.ExtendWith
+// import org.mockito.junit.jupiter.MockitoExtension
+// import org.springframework.boot.test.context.SpringBootTest
+// import kotlin.test.assertEquals
 //
-//@ExtendWith(MockitoExtension::class)
-//@SpringBootTest
-//class ExecuteServiceTest {
+// @ExtendWith(MockitoExtension::class)
+// @SpringBootTest
+// class ExecuteServiceTest {
 //
 //    private lateinit var executeService: ExecuteService
 //    private val assetService: AssetService = mock()
@@ -46,4 +46,4 @@
 //
 //        assert(results.isNotEmpty())
 //    }
-//}
+// }

@@ -1,17 +1,17 @@
-//import com.github.teamverdeingsis.parse.ParseApplication
-//import com.github.teamverdeingsis.parse.services.AssetService
-//import org.junit.jupiter.api.Test
-//import org.mockito.Mock
-//import org.mockito.junit.jupiter.MockitoExtension
-//import org.springframework.boot.test.context.SpringBootTest
-//import org.springframework.http.ResponseEntity
-//import org.junit.jupiter.api.extension.ExtendWith
-//import org.mockito.kotlin.*
-//import org.springframework.web.client.RestTemplate
+// import com.github.teamverdeingsis.parse.ParseApplication
+// import com.github.teamverdeingsis.parse.services.AssetService
+// import org.junit.jupiter.api.Test
+// import org.mockito.Mock
+// import org.mockito.junit.jupiter.MockitoExtension
+// import org.springframework.boot.test.context.SpringBootTest
+// import org.springframework.http.ResponseEntity
+// import org.junit.jupiter.api.extension.ExtendWith
+// import org.mockito.kotlin.*
+// import org.springframework.web.client.RestTemplate
 //
-//@ExtendWith(MockitoExtension::class)
-//@SpringBootTest(classes = [ParseApplication::class])
-//class AssetServiceTest {
+// @ExtendWith(MockitoExtension::class)
+// @SpringBootTest(classes = [ParseApplication::class])
+// class AssetServiceTest {
 //
 //    @Mock
 //    private lateinit var restTemplate: RestTemplate
@@ -174,4 +174,4 @@
 //        assert(!result)
 //        verify(restTemplate).getForObject(assetServiceUrl, String::class.java)
 //    }
-//}
+// }

@@ -1,6 +1,5 @@
 package com.github.teamverdeingsis.parse.config
 
-
 import com.nimbusds.jwt.JWTParser
 
 class AuthorizationDecoder {

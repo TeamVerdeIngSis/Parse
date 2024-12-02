@@ -11,7 +11,6 @@ import org.springframework.data.redis.connection.stream.ObjectRecord
 import org.springframework.data.redis.core.ReactiveRedisTemplate
 import org.springframework.data.redis.stream.StreamReceiver
 import org.springframework.stereotype.Component
-import org.springframework.web.client.RestTemplate
 
 @Component
 class FormattingRuleConsumer @Autowired constructor(
@@ -19,7 +18,7 @@ class FormattingRuleConsumer @Autowired constructor(
     @Value("\${stream.formattingKey}") streamKey: String,
     @Value("\${groups.formatting}") groupId: String,
     private val service: FormatterService,
-    private val objectMapper: ObjectMapper
+    private val objectMapper: ObjectMapper,
 ) : RedisStreamConsumer<String>(streamKey, groupId, redis) {
 
     override fun onMessage(record: ObjectRecord<String, String>) {
@@ -30,7 +29,7 @@ class FormattingRuleConsumer @Autowired constructor(
             val userId = AuthorizationDecoder.decode(authorization)
             val snippetId = snippetMessage.snippetId
             println("Checkpoint 2, Formateando snippet $snippetId con las reglas del usuario $userId")
-            val formattedContent = service.formatSnippet(snippetId,userId)
+            val formattedContent = service.formatSnippet(snippetId, userId)
             println("Snippet formateado: $formattedContent")
         } catch (e: Exception) {
             println("Error al procesar el mensaje: ${e.message}")
@@ -42,6 +41,4 @@ class FormattingRuleConsumer @Autowired constructor(
             .targetType(String::class.java)
             .build()
     }
-
-
 }

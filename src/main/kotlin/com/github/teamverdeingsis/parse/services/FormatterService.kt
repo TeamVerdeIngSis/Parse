@@ -12,20 +12,18 @@ import org.springframework.stereotype.Service
 import reader.Reader
 import java.io.File
 import java.io.InputStream
-import java.util.stream.Collectors
-import kotlin.streams.asStream
 
 @Service
 class FormatterService(private val assetService: AssetService) {
 
     fun formatSnippet(snippetId: String, userId: String): String {
         println("Formateando snippet $snippetId con las reglas del usuario $userId")
-        val code = assetService.getAsset( snippetId,"snippets") ?: ""
+        val code = assetService.getAsset(snippetId, "snippets") ?: ""
         println("codee $code")
         println("voy a buscar las reglas del usuario $userId")
         val rulesInString: String = if (assetService.assetExists("format", userId)) {
             println("che el asset existe")
-            assetService.getAsset(userId,"format") ?: ""
+            assetService.getAsset(userId, "format") ?: ""
         } else {
             println("che el asset no existe")
             RulesFactory.defaultFormattingRules().toString()
@@ -78,8 +76,6 @@ class FormatterService(private val assetService: AssetService) {
         return formattedCode
     }
 
-
-
     private fun convertRulesToConfig(rules: List<Rule>): FormattingConfig {
         val config = FormattingConfig()
 
@@ -97,4 +93,3 @@ class FormatterService(private val assetService: AssetService) {
         return config
     }
 }
-

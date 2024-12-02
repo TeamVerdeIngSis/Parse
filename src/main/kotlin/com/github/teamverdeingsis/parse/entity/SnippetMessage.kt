@@ -11,21 +11,19 @@ data class Rule(
     val id: String,
     val name: String,
     val isActive: Boolean,
-    val value: String? = null
+    val value: String? = null,
 )
-
 
 enum class Conformance {
     PENDING,
     COMPLIANT,
-    NOT_COMPLIANT
+    NOT_COMPLIANT,
 }
 
 data class UpdateConformanceRequest(
     val snippetId: String,
-    val conformance: Conformance
+    val conformance: Conformance,
 )
-
 
 data class LintingConfig(
     @JsonProperty("identifier_format")

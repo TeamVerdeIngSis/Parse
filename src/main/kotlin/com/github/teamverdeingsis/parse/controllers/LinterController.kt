@@ -17,10 +17,10 @@ class LinterController(private val service: LinterService) {
         println("AAA")
         try {
             val response = service.lintSnippet(request.userId, request.snippetId)
-        return response
+            return response
         } catch (e: Exception) {
             println("Error occurred while linting: ${e.message}")
-            return listOf(LinterError("couldnt lint",0,0))
+            return listOf(LinterError("couldnt lint", 0, 0))
         }
     }
 }

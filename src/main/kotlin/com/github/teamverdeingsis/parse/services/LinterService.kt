@@ -1,5 +1,9 @@
 package com.github.teamverdeingsis.parse.services
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
+import com.github.teamverdeingsis.parse.entity.LintingConfig
+import com.github.teamverdeingsis.parse.entity.Rule
 import factory.LexerFactory
 import factory.LinterFactory
 import factory.ParserFactory
@@ -7,12 +11,8 @@ import linter.LinterError
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import reader.Reader
-import java.io.InputStream
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
-import com.github.teamverdeingsis.parse.entity.LintingConfig
-import com.github.teamverdeingsis.parse.entity.Rule
 import java.io.File
+import java.io.InputStream
 
 @Service
 class LinterService(private val restTemplate: RestTemplate) {
@@ -57,7 +57,6 @@ class LinterService(private val restTemplate: RestTemplate) {
         println("resultado del linteo $linterResults")
         return linterResults
     }
-
 
     private fun makeLintingConfig(rules: List<Rule>): LintingConfig {
         val config = LintingConfig()

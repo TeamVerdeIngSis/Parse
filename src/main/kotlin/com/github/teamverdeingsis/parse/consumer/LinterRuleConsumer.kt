@@ -17,7 +17,6 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
-import java.time.Duration
 
 @Component
 class LinterRuleConsumer @Autowired constructor(
@@ -26,7 +25,7 @@ class LinterRuleConsumer @Autowired constructor(
     @Value("\${groups.linting}") groupId: String,
     private val restTemplate: RestTemplate,
     private val service: LinterService,
-    private val objectMapper: ObjectMapper
+    private val objectMapper: ObjectMapper,
 ) : RedisStreamConsumer<String>(streamKey, groupId, redis) {
 
     private fun reLintSnippet(authorization: String, snippetId: String) {

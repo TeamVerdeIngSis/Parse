@@ -11,8 +11,6 @@ import provider.InputProvider
 import reader.Reader
 import java.io.InputStream
 
-
-
 @Service
 class ExecuteService(private val assetService: AssetService) {
 
@@ -82,7 +80,6 @@ class ExecuteService(private val assetService: AssetService) {
         return finalResults
     }
 
-
     fun normalizeResults(results: List<Any?>): List<String> {
         return results.map { normalizeValue(it) } // Reutilizar normalizeValue para consistencia
     }
@@ -117,5 +114,4 @@ class ExecuteService(private val assetService: AssetService) {
         }
         return finalResults
     }
-
 }
