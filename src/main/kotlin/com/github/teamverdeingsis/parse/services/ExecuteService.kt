@@ -38,7 +38,9 @@ class ExecuteService(private val assetService: AssetService) {
 
     fun test(version: String, snippetId: String, inputs: List<String>, outputs: List<String>): List<String> {
         val code = assetService.getAsset("snippets", snippetId)
+        println("Code: $code")
         val codeToInputStream: InputStream = code?.byteInputStream() ?: return listOf("Snippet not found")
+        println("Code to input stream: $codeToInputStream")
         val reader = Reader(codeToInputStream)
         val lexer = when (version) {
             "1.1" -> LexerFactory().createLexer1_1(reader)
