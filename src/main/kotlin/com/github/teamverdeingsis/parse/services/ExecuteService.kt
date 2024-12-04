@@ -37,7 +37,7 @@ class ExecuteService(private val assetService: AssetService) {
     }
 
     fun test(version: String, snippetId: String, inputs: List<String>, outputs: List<String>): List<String> {
-        val code = assetService.getAsset("snippets", snippetId)
+        val code = assetService.getAsset(snippetId, "snippets")
         println("Code: $code")
         val codeToInputStream: InputStream = code?.byteInputStream() ?: return listOf("Snippet not found")
         println("Code to input stream: $codeToInputStream")
