@@ -6,7 +6,6 @@ plugins {
  id 'maven-publish'
  id 'jacoco'
  id 'com.diffplug.spotless' version '6.22.0'
-
 }
 
 group = 'teamVerde'
@@ -116,12 +115,18 @@ jacocoTestReport {
 
  classDirectories.setFrom(
          fileTree(dir: 'build/classes/kotlin/main', includes: [
-                 'com/github/teamverdeingsis/parse/services/**/*.class'
-         ])
+                 'com/github/teamverdeingsis/parse/services/**/*.class',
+                 'com/github/teamverdeingsis/parse/controllers/**/*.class'
+         ]).exclude(
+                 'com/github/teamverdeingsis/parse/services/LinterService*.class',
+                 'com/github/teamverdeingsis/parse/services/AssetService.class',
+                 'com/github/teamverdeingsis/parse/services/FormatterService.class',
+                 'com/github/teamverdeingsis/parse/controllers/ExecuteController.class',
+                 'com/github/teamverdeingsis/parse/controllers/LinterController.class',
+                 '**/ExecuteService$test$inputAdapter$1.class'
+         )
  )
 }
-
-
 
 jacocoTestCoverageVerification {
  violationRules {
@@ -134,7 +139,6 @@ jacocoTestCoverageVerification {
   }
  }
 }
-
 
 jacoco {
  toolVersion = '0.8.9'
