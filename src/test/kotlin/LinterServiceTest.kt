@@ -28,8 +28,8 @@ class LinterServiceTest {
         val result = linterService.lintSnippet(snippetId, userId)
 
         // Assert: Verificamos que los errores de linter sean los esperados
-        assertEquals(2, result.size)  // Esperamos que haya dos errores
-        assertEquals("Variable names should be in snake_case", result[0].message)  // Verificamos el mensaje del primer error
-        assertEquals("Missing semicolon", result[1].message)  // Verificamos el mensaje del segundo error
+        assertEquals(2, result.size) // Esperamos que haya dos errores
+        assertEquals("Variable names should be in snake_case", result[0].message) // Verificamos el mensaje del primer error
+        assertEquals("Missing semicolon", result[1].message) // Verificamos el mensaje del segundo error
     }
 }

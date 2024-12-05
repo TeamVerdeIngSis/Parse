@@ -1,5 +1,5 @@
-import com.github.teamverdeingsis.parse.services.LinterService
 import com.fasterxml.jackson.core.type.TypeReference
+import com.github.teamverdeingsis.parse.services.LinterService
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import kotlin.test.assertNotNull

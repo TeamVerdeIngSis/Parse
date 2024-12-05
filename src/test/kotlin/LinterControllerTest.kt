@@ -5,11 +5,11 @@ import linter.LinterError
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 class LinterControllerTest {
 
@@ -27,7 +27,7 @@ class LinterControllerTest {
         mockMvc.perform(
             MockMvcRequestBuilders.post("/api/parser/lint")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("""{"userId": "user123", "snippetId": "123"}""")
+                .content("""{"userId": "user123", "snippetId": "123"}"""),
         )
             .andExpect(status().isOk())
             .andExpect { result ->

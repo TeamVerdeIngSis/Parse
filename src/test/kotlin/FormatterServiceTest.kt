@@ -25,14 +25,14 @@ class FormatterServiceTest {
         val expectedFormattedCode = "formattedCode"
 
         // Asegúrate de devolver un código de ejemplo y las reglas en formato adecuado
-        whenever(assetService.getAsset(eq(snippetId), eq("snippets"))).thenReturn("code")  // Código a formatear
+        whenever(assetService.getAsset(eq(snippetId), eq("snippets"))).thenReturn("code") // Código a formatear
         whenever(assetService.assetExists(eq("format"), eq(userId))).thenReturn(true)
-        whenever(assetService.getAsset(eq(userId), eq("format"))).thenReturn("{\"space-before-colon\":false,\"space-after-colon\":false,\"space-around-equals\":false,\"newline-before-println\":0,\"indentation\":4}")  // Reglas en formato JSON
+        whenever(assetService.getAsset(eq(userId), eq("format"))).thenReturn("{\"space-before-colon\":false,\"space-after-colon\":false,\"space-around-equals\":false,\"newline-before-println\":0,\"indentation\":4}") // Reglas en formato JSON
 
         val result = formatterService.formatSnippet(snippetId, userId)
         println(result)
 
         // Verifica que el resultado sea el código esperado
-        assertEquals("","")
+        assertEquals("", "")
     }
 }

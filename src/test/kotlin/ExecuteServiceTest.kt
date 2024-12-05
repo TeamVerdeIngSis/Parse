@@ -1,9 +1,9 @@
-import com.github.teamverdeingsis.parse.services.ExecuteService
 import com.github.teamverdeingsis.parse.services.AssetService
+import com.github.teamverdeingsis.parse.services.ExecuteService
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.any
-import org.mockito.kotlin.whenever
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 import kotlin.test.assertEquals
 
 class ExecuteServiceTest {

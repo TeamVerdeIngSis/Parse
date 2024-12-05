@@ -4,11 +4,11 @@ import com.github.teamverdeingsis.parse.services.FormatterService
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 class FormatterControllerTest {
 
@@ -26,7 +26,7 @@ class FormatterControllerTest {
         mockMvc.perform(
             MockMvcRequestBuilders.post("/api/parser/format")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("""{"snippetId": "123", "userId": "user123", "content": "Snippet"}""")
+                .content("""{"snippetId": "123", "userId": "user123", "content": "Snippet"}"""),
         )
             .andExpect(status().isOk())
             .andExpect { result ->
